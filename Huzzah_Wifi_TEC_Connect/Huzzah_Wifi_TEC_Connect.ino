@@ -2,6 +2,7 @@
  *  Denne kode kan teste om du kan komme på TECs netværk
  *  Ændr data i "arduino_secrets.h" filen og upload til dit ESP8266 modul.
  */
+#include "arduino_secrets.h"
 #include  <ESP8266WiFi.h>
 
 extern "C" {
@@ -17,13 +18,14 @@ const char identity[] = SECRET_USER;
 const char password[] = SECRET_PASS;
 const char* host = "wifitest.adafruit.com";
 
-uint8_t target_esp_mac[6] = {0x24, 0x0a, 0xc4, 0x9a, 0x58, 0x28};
+uint8_t target_esp_mac[6] = {0xcc, 0x50, 0xe3, 0x08, 0xa4, 0xe8};
+
 void setup() {
 
   WiFi.mode(WIFI_STA);
   Serial.begin(115200);
   delay(1000);
-  Serial.setDebugOutput(true);
+  //Serial.setDebugOutput(true);
   Serial.printf("SDK version: %s\n", system_get_sdk_version());
   Serial.printf("Free Heap: %4d\n",ESP.getFreeHeap());
   
