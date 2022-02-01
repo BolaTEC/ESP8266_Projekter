@@ -1,4 +1,3 @@
-#define SECRET_SSID "<TEC eller dit eget SSID derhjemme>"
-#define SECRET_USER "<unilogin>@elev.tec.dk>"
-#define SECRET_PASS "<password til unilogin>"
-#define WRITE_API "<DIN THINGSPEAK WRITE_API KODE>"
+#define SECRET_SSID "<Dit SSID fra hjemmenetværk>"
+#define SECRET_PASS "<pass key til netværk>"
+#define WRITE_API "<Din WRITE API fra ThingSpeak.com>"

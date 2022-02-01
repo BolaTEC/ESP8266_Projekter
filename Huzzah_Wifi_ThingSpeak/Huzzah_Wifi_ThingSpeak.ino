@@ -1,18 +1,19 @@
-/* Sensor test sketch
-  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
-  */
+/* 
+ *  Denne kode får din ESP8266 modul på et privat netværk
+ *  Ændr data i "arduino_secrets.h" filen og upload til dit ESP8266 modul.
+ *  Værktøjet her aflæser én værdi på Analog 0 (A0) og sender til ThingSpeak.com servicen
+*/
 #include "arduino_secrets.h"   //  <-- I denne fil (se oppe i fanebladene) skal du skrive dine netværk´s oplysninger
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 
 const char* ssid = SECRET_SSID;
-const char* user = SECRET_USER;
 const char* pass = SECRET_PASS;
 int status = WL_IDLE_STATUS;     // the WiFi radio's status
 
 // ThingSpeak Settings
 char thingSpeakAddress[] = "api.thingspeak.com";
-String APIKey = WRITE_API;             // enter your channel's Write API Key
+String APIKey = WRITE_API;             // enter your channel's Write API Key in the arduino_secrets.h file
 const int updateThingSpeakInterval = 20 * 1000; // 20 second interval at which to update ThingSpeak
 
 // Initialize the Ethernet client library
@@ -44,9 +45,6 @@ void setup(void) {
     Serial.print("Attempting to connect to WPA SSID: ");
     Serial.println(ssid);
     // Connect to WPA2 enterprise network:
-    // - You can optionally provide additional identity and CA cert (string) parameters if your network requires them:
-    //      WiFi.beginEnterprise(ssid, user, pass, identity, caCert)
-    // status = WiFi.beginEnterprise(ssid, user, pass); // Enable denne linje (fjern "//"), når du er på TEC / HCØ´s netværk, og rediger arduino_secrets.h filen med dine data
     status = WiFi.begin(ssid, pass);  // Udkommenter (tilføj "//" foran denne linje) når du er på TEC / HCØ's netværk.
     // wait 10 seconds for connection:
     delay(10000);
@@ -80,10 +78,11 @@ void loop(void) {
   }
 
   // Update ThingSpeak
-  if (!client.connected() && (millis() - lastConnectionTime > updateThingSpeakInterval)) {
+  if (!client.connected() && ((millis() - lastConnectionTime) > updateThingSpeakInterval)) {
     updateThingSpeak("field1=" + String(temperature));
     Serial.print("temp. sent to ThingSpeak: ");
     Serial.println(temperature);
+    delay(1000);
   }
   lastConnected = client.connected();
 }
