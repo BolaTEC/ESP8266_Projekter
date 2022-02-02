@@ -28,7 +28,8 @@ uint8_t target_esp_mac[6] = {0xcc, 0x50, 0xe3, 0x08, 0xa4, 0xe8};
 WiFiClient client;
 
 //ADC Pin Variables
-int adcPin = A0;        
+const int adcPin = A0;   
+const int blueLED = 2; 
 
 //the analog pin the TMP36's Vout (sense) pin is connected to
 //the resolution is 10 mV / degree centigrade with a
@@ -39,7 +40,8 @@ int tempReading;        // the analog reading from the sensor
 /*   SETUP                           */
 /*************************************/
 void setup(void) {
-
+pinMode(blueLED,OUTPUT);
+  digitalWrite(blueLED,HIGH);
   WiFi.mode(WIFI_STA);
   Serial.begin(115200);
   delay(1000);
@@ -122,6 +124,8 @@ void loop(void) {
   // If still connected to WiFi
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
+   // Blink the blue LED
+    digitalWrite(blueLED,LOW);
     
         // Prepare your HTTP POST request data
     String httpRequestData = String(serverName) + "&temperatur=" + String(temp);
@@ -136,7 +140,8 @@ void loop(void) {
     Serial.println(httpCode);
     Serial.print("httpRequestData: ");
     Serial.println(httpRequestData);
-
+    // Blink the blue LED
+    digitalWrite(blueLED,HIGH);
 #ifdef DEBUG
     delay(5000); // Delay 5 sec DEBUG ONLY
 #else    
