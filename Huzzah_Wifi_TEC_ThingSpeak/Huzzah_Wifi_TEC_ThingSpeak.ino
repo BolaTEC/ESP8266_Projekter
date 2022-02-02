@@ -1,5 +1,5 @@
-
- *  Denne kode får din ESP8266 modul på et privat netværk
+/*
+ *  Denne kode får din ESP8266 modul på TECs netværk
  *  Ændr data i "arduino_secrets.h" filen og upload til dit ESP8266 modul.
  *  Værktøjet her aflæser én værdi på Analog 0 (A0) og sender til ThingSpeak.com servicen
 */
